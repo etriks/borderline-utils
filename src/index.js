@@ -1,6 +1,7 @@
 const defines = require('./defines.js');
 let ErrorStack = require('./error.js');
 let RegistryModule = require('./registry.js');
+let ConfigurationModule = require('./configuration.js');
 
 module.exports = {
     Models: {
@@ -24,6 +25,7 @@ module.exports = {
         BL_SERVICE_STATUS_BUSY: defines.statusServiceBusy,
         BL_SERVICE_STATUS_DEAD: defines.statusServiceDead,
 
+        BL_GLOBAL_COLLECTION_CONFIGURATION: defines.global_configurationCollectionName,
         BL_GLOBAL_COLLECTION_REGISTRY: defines.global_registryCollectionName,
         BL_GLOBAL_COLLECTION_SESSIONS: defines.global_sessionCollectionName,
         BL_GLOBAL_COLLECTION_STORAGE: defines.global_storageCollectionName,
@@ -54,6 +56,7 @@ module.exports = {
         BL_QUERY_STATUS_DONE: defines.queryStatusDone
     },
     ErrorHelper: ErrorStack,
+    ConfigurationHelper: ConfigurationModule,
     RegistryHelper: RegistryModule,
     RegistryIdentifier: RegistryModule.identifier
 };

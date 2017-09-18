@@ -1,3 +1,13 @@
+const configurationModel = {
+    type: 'borderline-component',
+    swift: {
+        host: '127.0.0.1',
+        port: 80,
+        protocol: 'http',
+        username: '',
+        password: ''
+    }
+}
 
 const registryModel = {
     type: 'borderline-component',
@@ -98,8 +108,8 @@ const queryModel = {
     endpoint: dataSourceModel,
     credentials: credentialsModel,
     status: executionModel,
-    input: [ ] ,
-    output: [ ]
+    input: [],
+    output: []
 };
 
 module.exports = {
@@ -112,6 +122,7 @@ module.exports = {
     statusServiceBusy: 'borderline_service_kartoffelsalat',
     statusServiceDead: 'borderline_service_dead',
 
+    global_configurationCollectionName: 'borderline_global_configuration',
     global_registryCollectionName: 'borderline_global_registry',
     global_storageCollectionName: 'borderline_global_storage',
     global_sessionCollectionName: 'borderline_global_sessions',
@@ -140,11 +151,12 @@ module.exports = {
     extensionUpdateInterval: 10 * 1000, // 10 * 1000 ms = 10 seconds
     extensionManifestFilename: 'manifest.json',
 
+    configurationModel: configurationModel,
     registryModel: registryModel,
     userModel: userModel,
     dataSourceModel: dataSourceModel,
-    extensionModel:extensionModel,
-    stepModel : stepModel,
+    extensionModel: extensionModel,
+    stepModel: stepModel,
     workflowStepModel: workflowStepModel,
     workflowModel: workflowModel,
     executionModel: executionModel,

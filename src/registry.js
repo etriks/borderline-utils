@@ -34,7 +34,7 @@ function Registry(serviceType, registryCollection) {
 }
 
 let _global_process_identifier = 'default';
-Registry.identifier = function() {
+Registry.identifier = function () {
     return _global_process_identifier;
 };
 
@@ -43,7 +43,7 @@ Registry.identifier = function() {
  * @desc Retrieves the model of this registry
  * @return {Object} The current model as a plain JS object attribute container
  */
-Registry.prototype.getModel = function() {
+Registry.prototype.getModel = function () {
     return this._model;
 };
 
@@ -54,7 +54,7 @@ Registry.prototype.getModel = function() {
  * @param model {Object} A plain js object attribute container
  * @return {Object} The updated model attributes.
  */
-Registry.prototype.setModel = function(model) {
+Registry.prototype.setModel = function (model) {
     this._model = Object.assign({}, this._model, model);
     return this._model;
 };
@@ -65,7 +65,7 @@ Registry.prototype.setModel = function(model) {
  * @param newStatus[in] {String} New value for the status
  * @return {String} Updated status
  */
-Registry.prototype.setStatus = function(newStatus) {
+Registry.prototype.setStatus = function (newStatus) {
     this._model.status = newStatus;
     this._sync();
     return _this._model.status;
@@ -76,7 +76,7 @@ Registry.prototype.setStatus = function(newStatus) {
  * @desc Getter on the status property
  * @return {String} Returns the current status of this service
  */
-Registry.prototype.getStatus = function() {
+Registry.prototype.getStatus = function () {
     return this._model.status;
 };
 
@@ -86,11 +86,11 @@ Registry.prototype.getStatus = function() {
  * updated system information and status
  * @param[in] delay Frequency of the refresh in milliseconds
  */
-Registry.prototype.startPeriodicUpdate = function(delay = defines.registryUpdateInterval) {
+Registry.prototype.startPeriodicUpdate = function (delay = defines.registryUpdateInterval) {
     let _this = this;
     _this.stopPeriodicUpdate(); // Stop running interval timer if any
     // Start interval timer update
-    _this._interval_timer = setInterval(function() {
+    _this._interval_timer = setInterval(function () {
         _this._systemInfoUpdate(); // Refresh model
         _this._sync(); // Silently synchronise with DB
     }, delay);
@@ -100,7 +100,7 @@ Registry.prototype.startPeriodicUpdate = function(delay = defines.registryUpdate
  * @fn stopPeriodicUpdate
  * @desc Stops the current interval timer ticks if any
  */
-Registry.prototype.stopPeriodicUpdate = function() {
+Registry.prototype.stopPeriodicUpdate = function () {
     let _this = this;
     if (_this._interval_timer !== null && _this._interval_timer !== undefined) {
         clearInterval(_this._interval_timer);
@@ -114,25 +114,25 @@ Registry.prototype.stopPeriodicUpdate = function() {
  * @return {Promise} Resolves to true on success, rejects an Errorstack otherwise
  * @private
  */
-Registry.prototype._sync = function() {
+Registry.prototype._sync = function () {
     let _this = this;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         let model_update = Object.assign({}, _this.getModel());
         let mongo_id = model_update._id;
         delete model_update._id; // Let mongoDB handle ids
-        _this._registryCollection.findOneAndUpdate({_id: new ObjectID(mongo_id)}, model_update, { returnOriginal: false, upsert: true}).then(function(result) {
+        _this._registryCollection.findOneAndUpdate({ _id: new ObjectID(mongo_id) }, model_update, { returnOriginal: false, upsert: true }).then(function (result) {
             // Assign global identifier value of this process
             _global_process_identifier = result.value._id.toHexString();
             // Update local model with whats inside the DB
             _this.setModel(result.value);
             resolve(true); // All good, update successful
-        }, function(update_error) {
+        }, function (update_error) {
             reject(ErrorStack('Update registry failed', update_error));
         })
     });
 };
 
-Registry.prototype._systemInfoUpdate = function() {
+Registry.prototype._systemInfoUpdate = function () {
     let _this = this;
 
     //Assign status values
@@ -155,9 +155,9 @@ Registry.prototype._systemInfoUpdate = function() {
     this._model.cpu.cores = [];
     os.cpus().forEach(function (cpu) {
         _this._model.cpu.cores.push({
-                model: cpu.model,
-                mhz: cpu.speed
-            }
+            model: cpu.model,
+            mhz: cpu.speed
+        }
         );
     });
 };
