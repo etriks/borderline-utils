@@ -17,6 +17,7 @@ const registryModel = {
     port: 4242,
     ip: 'localhost',
     hostname: 'localhost',
+    protocol: 'http',
     system: {
         arch: 'unknown',
         type: 'unknown',
@@ -42,10 +43,12 @@ const userModel = {
 };
 
 const dataSourceModel = {
-    sourceType: '',
-    sourceName: '',
-    sourceHost: '',
-    sourcePort: 8080,
+    type: '',
+    name: '',
+    host: '',
+    port: 8080,
+    protocol: 'http',
+    baseUrl: '',
     public: false,
     users: []
 };
@@ -113,13 +116,13 @@ const queryModel = {
 };
 
 module.exports = {
-    serverServiceName: 'borderline-server-panzer',
-    middlewareServiceName: 'borderline-middleware-flammenwerfer',
-    uiServiceName: 'borderline-ui-blitzkrieg',
+    serverServiceName: 'borderline-server',
+    middlewareServiceName: 'borderline-middleware',
+    uiServiceName: 'borderline-ui',
 
     statusServiceUnknown: 'borderline_service_unknown',
     statusServiceIdle: 'borderline_service_idle',
-    statusServiceBusy: 'borderline_service_kartoffelsalat',
+    statusServiceBusy: 'borderline_service_busy',
     statusServiceDead: 'borderline_service_dead',
 
     global_configurationCollectionName: 'borderline_global_configuration',
